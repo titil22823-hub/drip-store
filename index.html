@@ -3,113 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>DRIP STORE</title>
+<title>666 STORE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
   :root {
-    --bg: #0a0a0a;
-    --surface: #111111;
-    --surface2: #1a1a1a;
-    --accent: #ff3c3c;
-    --accent2: #ff8c00;
-    --text: #f0f0f0;
-    --muted: #666;
-    --border: #222;
-    --card-bg: #131313;
+    --black:  #000000;
+    --white:  #ffffff;
+    --grey1:  #111111;
+    --grey2:  #1c1c1c;
+    --grey3:  #2e2e2e;
+    --grey4:  #555555;
+    --grey5:  #888888;
+    --star:   #f5c518;
+    --border: 1px solid #2a2a2a;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
 
   html, body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Space Grotesk', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Mono', monospace;
     min-height: 100vh;
     overflow-x: hidden;
+    cursor: default;
   }
 
-  body::before {
+  body::after {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.015) 39px, rgba(255,255,255,0.015) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.015) 39px, rgba(255,255,255,0.015) 40px);
     pointer-events: none;
-    z-index: 999;
-    opacity: 0.4;
+    z-index: 0;
   }
 
   #country-screen {
     position: fixed;
     inset: 0;
-    background: var(--bg);
-    z-index: 500;
+    background: var(--black);
+    z-index: 600;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 32px 24px;
-    animation: fadeIn 0.3s ease;
+    padding: 40px 28px;
   }
 
-  #country-screen.hiding {
-    animation: zoomOut 0.35s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+  #country-screen.out {
+    animation: csOut 0.38s ease forwards;
     pointer-events: none;
   }
 
-  @keyframes zoomOut {
-    to { opacity: 0; transform: scale(0.94); }
+  @keyframes csOut {
+    to { opacity: 0; transform: translateY(-24px); }
   }
 
-  .country-glow {
-    position: absolute;
-    width: 400px; height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,60,60,0.07) 0%, transparent 70%);
-    pointer-events: none;
+  .cs-skull {
+    font-size: 52px;
+    margin-bottom: 16px;
+    animation: pulse 2.5s ease-in-out infinite;
   }
 
-  .cs-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 44px;
-    letter-spacing: 4px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  @keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50%      { transform: scale(1.06); }
+  }
+
+  .cs-brand {
+    font-family: 'Anton', sans-serif;
+    font-size: 56px;
+    letter-spacing: 6px;
+    line-height: 1;
     margin-bottom: 4px;
-    animation: fadeInDown 0.5s ease 0.1s both;
+    color: var(--white);
   }
 
-  .cs-sub {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 4px;
+  .cs-tagline {
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--grey4);
     text-transform: uppercase;
-    margin-bottom: 44px;
-    animation: fadeInDown 0.5s ease 0.15s both;
+    margin-bottom: 52px;
   }
 
-  .cs-q {
-    font-size: 19px;
-    font-weight: 700;
+  .cs-prompt {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--grey5);
+    margin-bottom: 20px;
     text-align: center;
-    margin-bottom: 6px;
-    animation: fadeInUp 0.5s ease 0.2s both;
-  }
-
-  .cs-hint {
-    font-size: 13px;
-    color: var(--muted);
-    text-align: center;
-    margin-bottom: 30px;
-    animation: fadeInUp 0.5s ease 0.25s both;
   }
 
   .cs-list {
     width: 100%;
-    max-width: 320px;
+    max-width: 300px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -117,256 +110,278 @@
 
   .cs-btn {
     width: 100%;
-    padding: 16px 18px;
-    border-radius: 16px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'Space Grotesk', sans-serif;
+    padding: 20px 22px;
+    background: var(--grey1);
+    border: var(--border);
+    color: var(--white);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 14px;
-    transition: border-color 0.15s, transform 0.15s;
-    animation: fadeInUp 0.5s ease both;
+    transition: background 0.15s, border-color 0.15s, transform 0.12s;
+    animation: slideIn 0.5s ease both;
+    position: relative;
+    overflow: hidden;
   }
 
-  .cs-btn:nth-child(1) { animation-delay: 0.3s; }
-  .cs-btn:nth-child(2) { animation-delay: 0.37s; }
-  .cs-btn:nth-child(3) { animation-delay: 0.44s; }
+  .cs-btn::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--white);
+    transform: scaleY(0);
+    transition: transform 0.2s;
+    transform-origin: bottom;
+  }
 
-  .cs-btn:active { transform: scale(0.97); border-color: var(--accent); }
+  .cs-btn:active { transform: scale(0.97); background: var(--grey2); }
+  .cs-btn:active::before { transform: scaleY(1); }
 
-  .cs-flag { font-size: 30px; flex-shrink: 0; }
+  .cs-btn:nth-child(1) { animation-delay: 0.2s; }
+  .cs-btn:nth-child(2) { animation-delay: 0.28s; }
 
-  .cs-info { text-align: left; }
-  .cs-country-name { font-size: 15px; font-weight: 700; }
-  .cs-currency-hint { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  @keyframes slideIn {
+    from { opacity:0; transform: translateX(-16px); }
+    to   { opacity:1; transform: translateX(0); }
+  }
 
-  .cs-arrow { margin-left: auto; color: var(--muted); font-size: 20px; font-weight: 300; }
+  .cs-flag  { font-size: 26px; flex-shrink: 0; }
+  .cs-info  { text-align: left; }
+  .cs-cname { font-size: 13px; font-weight: 500; letter-spacing: 1px; }
+  .cs-csym  { font-size: 11px; color: var(--grey4); margin-top: 2px; letter-spacing: 1px; }
+  .cs-chev  { margin-left: auto; color: var(--grey4); font-size: 18px; }
 
-  #app { display: none; }
-  #app.visible { display: block; animation: fadeIn 0.4s ease; }
+  #app { display:none; }
+  #app.on { display: block; animation: fadeIn 0.3s ease; }
+
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(14px); } to { opacity:1; transform: translateY(0); } }
 
   header {
     position: sticky;
     top: 0;
     z-index: 50;
-    padding: 13px 18px;
-    background: rgba(10,10,10,0.93);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
+    padding: 14px 18px;
+    background: rgba(0,0,0,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: var(--border);
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 29px;
-    letter-spacing: 3px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .logo-wrap {}
+
+  .logo-main {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    letter-spacing: 4px;
+    color: var(--white);
     line-height: 1;
   }
 
+  .logo-main span { color: var(--grey4); }
+
   .logo-sub {
-    font-size: 9px;
+    font-size: 8px;
     letter-spacing: 4px;
-    color: var(--muted);
+    color: var(--grey4);
     text-transform: uppercase;
     margin-top: 2px;
   }
 
-  .header-right { display: flex; align-items: center; gap: 8px; }
+  .hdr-right { display:flex; align-items:center; gap:8px; }
 
-  .country-chip {
+  .c-chip {
     display: flex;
     align-items: center;
     gap: 5px;
     padding: 6px 11px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--muted);
+    background: var(--grey1);
+    border: var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--grey5);
     cursor: pointer;
     transition: all 0.15s;
+    letter-spacing: 1px;
   }
-  .country-chip:active { transform: scale(0.9); }
+  .c-chip:active { transform: scale(0.9); background: var(--grey2); }
 
   .icon-btn {
     width: 38px; height: 38px;
-    border-radius: 50%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
+    background: var(--grey1);
+    border: var(--border);
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     transition: all 0.15s;
   }
-  .icon-btn:active { transform: scale(0.88); }
+  .icon-btn:active { transform: scale(0.9); background: var(--grey2); }
 
   .hero {
-    padding: 34px 20px 24px;
+    padding: 40px 18px 28px;
+    border-bottom: var(--border);
     position: relative;
     overflow: hidden;
   }
 
-  .hero::before {
-    content: '';
+  .hero-number {
+    font-family: 'Anton', sans-serif;
+    font-size: 130px;
+    line-height: 1;
+    color: var(--grey2);
     position: absolute;
-    top: -60px; right: -60px;
-    width: 280px; height: 280px;
-    background: radial-gradient(circle, rgba(255,60,60,0.09) 0%, transparent 70%);
+    right: -10px;
+    top: 10px;
+    letter-spacing: -4px;
     pointer-events: none;
+    user-select: none;
   }
 
-  .hero-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255,60,60,0.09);
-    border: 1px solid rgba(255,60,60,0.28);
-    border-radius: 100px;
-    padding: 4px 12px;
-    font-size: 10px;
-    letter-spacing: 2px;
+  .hero-eyebrow {
+    font-size: 9px;
+    letter-spacing: 5px;
+    color: var(--grey4);
     text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
-  .hero-tag::before {
+  .hero-eyebrow::before {
     content: '';
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: blink 1.5s infinite;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.3; transform: scale(1.4); }
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--grey4);
   }
 
   .hero h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(50px, 13vw, 72px);
-    line-height: 0.88;
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(44px, 12vw, 64px);
+    line-height: 0.92;
     letter-spacing: 2px;
-  }
-
-  .hero h1 span {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
   }
 
   .hero-desc {
-    margin-top: 12px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.6;
-    max-width: 265px;
+    margin-top: 16px;
+    font-size: 11px;
+    color: var(--grey4);
+    line-height: 1.7;
+    max-width: 250px;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 1;
   }
 
   .filters {
-    padding: 0 18px 16px;
+    padding: 16px 18px;
     display: flex;
-    gap: 7px;
+    gap: 6px;
     overflow-x: auto;
     scrollbar-width: none;
+    border-bottom: var(--border);
   }
   .filters::-webkit-scrollbar { display: none; }
 
-  .filter-btn {
+  .f-btn {
     flex-shrink: 0;
-    padding: 7px 15px;
-    border-radius: 100px;
-    border: 1px solid var(--border);
+    padding: 7px 14px;
     background: transparent;
-    color: var(--muted);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
+    border: var(--border);
+    color: var(--grey4);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.14s;
     white-space: nowrap;
+    text-transform: uppercase;
   }
 
-  .filter-btn.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
+  .f-btn.on {
+    background: var(--white);
+    border-color: var(--white);
+    color: var(--black);
   }
 
-  .filter-btn:active { transform: scale(0.93); }
+  .f-btn:active { transform: scale(0.93); }
 
-  .section-header {
-    padding: 0 18px 12px;
+  .sec-header {
+    padding: 16px 18px 12px;
     display: flex;
-    align-items: baseline;
-    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: var(--border);
   }
 
-  .section-header h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 24px;
+  .sec-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 18px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .sec-count {
+    font-size: 10px;
+    color: var(--grey4);
     letter-spacing: 2px;
   }
 
-  .section-header span { font-size: 12px; color: var(--muted); }
-
-  .products-grid {
-    padding: 0 14px 40px;
+  .grid {
+    padding: 14px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 11px;
+    gap: 10px;
+    padding-bottom: 40px;
   }
 
   .card {
-    background: var(--card-bg);
-    border-radius: 15px;
-    border: 1px solid var(--border);
-    overflow: hidden;
+    background: var(--grey1);
+    border: var(--border);
     cursor: pointer;
-    transition: transform 0.16s, border-color 0.16s;
+    transition: transform 0.14s, border-color 0.14s;
     position: relative;
-    animation: fadeInUp 0.45s ease both;
+    overflow: hidden;
+    animation: fadeUp 0.45s ease both;
   }
 
   .card:active { transform: scale(0.97); }
+  .card:active { border-color: var(--grey3); }
 
   .card.wide {
     grid-column: span 2;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
   .card-badge {
     position: absolute;
-    top: 8px; left: 8px;
-    padding: 3px 8px;
-    border-radius: 100px;
+    top: 0; left: 0;
+    padding: 4px 10px;
+    font-family: 'DM Mono', monospace;
     font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-weight: 500;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    z-index: 2;
+    z-index: 3;
   }
 
-  .badge-new  { background: var(--accent);  color: #fff; }
-  .badge-hot  { background: var(--accent2); color: #fff; }
-  .badge-sale { background: #00d4aa;        color: #000; }
+  .b-new  { background: var(--white); color: var(--black); }
+  .b-hot  { background: var(--white); color: var(--black); }
+  .b-sale { background: var(--star);  color: var(--black); }
 
   .card-img {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    background: var(--surface2);
+    aspect-ratio: 1;
+    background: var(--grey2);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -375,117 +390,132 @@
   }
 
   .card.wide .card-img {
-    width: 46%;
     aspect-ratio: auto;
-    min-height: 150px;
-    flex-shrink: 0;
+    min-height: 170px;
   }
 
   .card-img img {
-    width: 100%; height: 100%;
+    width:100%; height:100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.35s ease;
+    filter: grayscale(100%);
+    transition: filter 0.3s, transform 0.3s;
   }
 
-  .card:active .card-img img { transform: scale(1.05); }
+  .card:active .card-img img {
+    filter: grayscale(80%);
+    transform: scale(1.04);
+  }
 
   .card-emoji {
-    font-size: 50px;
-    animation: floatUp 3.2s ease-in-out infinite;
+    font-size: 48px;
+    filter: grayscale(1);
   }
 
-  @keyframes floatUp {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-7px); }
+  .card-cross {
+    position: absolute;
+    bottom: 8px; right: 8px;
+    font-size: 11px;
+    color: var(--grey3);
+    font-family: 'Anton', sans-serif;
+    letter-spacing: 1px;
   }
 
-  .card-body { padding: 10px 12px 12px; }
+  .card-body { padding: 12px; }
 
   .card.wide .card-body {
-    flex: 1;
-    padding: 12px 14px;
+    padding: 14px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
 
   .card-name {
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 3px;
+    font-family: 'Anton', sans-serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    margin-bottom: 5px;
+    text-transform: uppercase;
   }
 
   .card-desc {
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.5;
-    margin-bottom: 7px;
-  }
-
-  .sizes-row {
-    display: flex;
-    gap: 3px;
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-  }
-
-  .size-chip {
-    padding: 2px 6px;
-    border-radius: 5px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    font-size: 9px;
-    font-weight: 700;
-    color: var(--muted);
+    font-size: 10px;
+    color: var(--grey5);
+    line-height: 1.6;
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
   }
 
   .card-footer {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 6px;
+    gap: 8px;
+    flex-wrap: wrap;
   }
+
+  .price-block {}
 
   .price-old {
     font-size: 10px;
-    color: var(--muted);
+    color: var(--grey4);
     text-decoration: line-through;
     display: block;
-    margin-bottom: 1px;
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
   }
 
-  .price-now {
-    font-family: 'Bebas Neue', sans-serif;
+  .price-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .price-fiat {
+    font-family: 'Anton', sans-serif;
     font-size: 20px;
     letter-spacing: 0.5px;
-    color: var(--accent);
+    color: var(--white);
     line-height: 1;
   }
 
+  .price-stars {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--star);
+    letter-spacing: 0.5px;
+  }
+
+  .star-icon { font-size: 12px; }
+
   .buy-btn {
-    background: linear-gradient(135deg, var(--accent), #ff6b3c);
+    background: var(--white);
     border: none;
-    border-radius: 8px;
-    padding: 7px 12px;
-    color: #fff;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
+    padding: 8px 14px;
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: opacity 0.15s, transform 0.15s;
+    transition: opacity 0.13s, transform 0.13s;
     white-space: nowrap;
     flex-shrink: 0;
   }
 
-  .buy-btn:active { transform: scale(0.9); opacity: 0.85; }
+  .buy-btn:active { transform: scale(0.91); opacity: 0.8; }
 
-  /* МОДАЛКА */
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.88);
     z-index: 300;
     display: none;
     align-items: flex-end;
@@ -498,187 +528,235 @@
 
   .modal-sheet {
     width: 100%;
-    background: #161616;
-    border-radius: 22px 22px 0 0;
-    border: 1px solid #272727;
-    border-bottom: none;
-    padding: 18px 20px calc(26px + env(safe-area-inset-bottom));
+    background: #0d0d0d;
+    border-top: 1px solid var(--grey3);
+    padding: 20px 20px calc(30px + env(safe-area-inset-bottom));
     transform: translateY(100%);
-    transition: transform 0.33s cubic-bezier(0.34, 1.4, 0.64, 1);
-    max-height: 88vh;
+    transition: transform 0.32s cubic-bezier(0.22, 1.2, 0.5, 1);
+    max-height: 90vh;
     overflow-y: auto;
   }
 
   .modal-overlay.open .modal-sheet { transform: translateY(0); }
 
   .modal-drag {
-    width: 34px; height: 4px;
-    border-radius: 2px;
-    background: #282828;
-    margin: 0 auto 16px;
+    width: 32px; height: 3px;
+    background: var(--grey3);
+    margin: 0 auto 20px;
   }
 
   .modal-img {
     width: 100%;
     aspect-ratio: 4/3;
-    border-radius: 14px;
-    background: var(--surface2);
+    background: var(--grey2);
     overflow: hidden;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 76px;
+    font-size: 80px;
+    position: relative;
   }
 
   .modal-img img {
-    width: 100%; height: 100%;
+    width:100%; height:100%;
     object-fit: cover;
+    filter: grayscale(100%);
+  }
+
+  .modal-img-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 6px 12px;
+    background: rgba(0,0,0,0.6);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--grey4);
+    text-align: right;
+    text-transform: uppercase;
   }
 
   .modal-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
+    font-family: 'Anton', sans-serif;
+    font-size: 26px;
     letter-spacing: 2px;
-    margin-bottom: 4px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    line-height: 1;
   }
 
   .modal-desc {
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.6;
-    margin-bottom: 12px;
-  }
-
-  .modal-price-row {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
+    font-size: 11px;
+    color: var(--grey5);
+    line-height: 1.7;
     margin-bottom: 16px;
+    letter-spacing: 0.3px;
   }
 
-  .modal-price {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 34px;
-    color: var(--accent);
+  .modal-prices {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: var(--border);
+    flex-wrap: wrap;
+  }
+
+  .modal-price-fiat {
+    font-family: 'Anton', sans-serif;
+    font-size: 32px;
+    color: var(--white);
     line-height: 1;
   }
 
   .modal-price-old {
-    font-size: 14px;
-    color: var(--muted);
-    text-decoration: line-through;
-  }
-
-  .modal-size-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 9px;
-  }
-
-  .modal-sizes {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 18px;
-  }
-
-  .sz-btn {
-    flex: 1;
-    padding: 10px 0;
-    border-radius: 10px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'Space Grotesk', sans-serif;
     font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.13s;
+    color: var(--grey4);
+    text-decoration: line-through;
+    margin-bottom: 2px;
+    display: block;
   }
 
-  .sz-btn.on {
-    background: var(--accent);
-    border-color: var(--accent);
+  .modal-stars {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--star);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 6px 12px;
+    background: rgba(245,197,24,0.08);
+    border: 1px solid rgba(245,197,24,0.25);
+  }
+
+  .modal-note {
+    font-size: 10px;
+    color: var(--grey4);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    padding: 10px 12px;
+    background: var(--grey1);
+    border-left: 2px solid var(--grey3);
+    line-height: 1.7;
   }
 
   .modal-order-btn {
     width: 100%;
-    padding: 15px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    padding: 16px;
+    background: var(--white);
     border: none;
-    color: #fff;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px;
-    font-weight: 800;
-    letter-spacing: 0.3px;
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     transition: opacity 0.15s, transform 0.15s;
   }
 
-  .modal-order-btn:active { opacity: 0.85; transform: scale(0.98); }
+  .modal-order-btn:active { opacity: 0.8; transform: scale(0.98); }
 
-  /* АНИМАЦИИ */
-  @keyframes fadeIn     { from { opacity: 0; }                          to { opacity: 1; } }
-  @keyframes fadeInUp   { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+  .ticker {
+    overflow: hidden;
+    border-bottom: var(--border);
+    padding: 8px 0;
+    background: var(--grey1);
+  }
+
+  .ticker-inner {
+    display: flex;
+    gap: 0;
+    animation: ticker 18s linear infinite;
+    white-space: nowrap;
+  }
+
+  .ticker-item {
+    font-family: 'Anton', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--grey3);
+    padding: 0 24px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
 </style>
 </head>
 <body>
+
 <div id="country-screen">
-  <div class="country-glow"></div>
-  <div class="cs-logo">DRIP STORE</div>
-  <div class="cs-sub">Premium T-Shirts</div>
-  <div class="cs-q">Из какой ты страны?</div>
-  <div class="cs-hint">Выбери, чтобы видеть цены в своей валюте</div>
+  <div class="cs-skull">💀</div>
+  <div class="cs-brand">666 STORE</div>
+  <div class="cs-tagline">Underground Streetwear</div>
+  <div class="cs-prompt">— Откуда ты —</div>
   <div class="cs-list">
     <button class="cs-btn" onclick="selectCountry('ua')">
       <span class="cs-flag">🇺🇦</span>
       <div class="cs-info">
-        <div class="cs-country-name">Украина</div>
-        <div class="cs-currency-hint">Цены в гривнах (₴)</div>
+        <div class="cs-cname">УКРАИНА</div>
+        <div class="cs-csym">Гривня · ₴</div>
       </div>
-      <span class="cs-arrow">›</span>
+      <span class="cs-chev">›</span>
     </button>
-    <button class="cs-btn" onclick="selectCountry('ru')">
-      <span class="cs-flag">🇷🇺</span>
+    <button class="cs-btn" onclick="selectCountry('eu')">
+      <span class="cs-flag">🇪🇺</span>
       <div class="cs-info">
-        <div class="cs-country-name">Россия</div>
-        <div class="cs-currency-hint">Цены в рублях (₽)</div>
+        <div class="cs-cname">ЕВРОПА</div>
+        <div class="cs-csym">Евро · €</div>
       </div>
-      <span class="cs-arrow">›</span>
-    </button>
-    <button class="cs-btn" onclick="selectCountry('de')">
-      <span class="cs-flag">🇩🇪</span>
-      <div class="cs-info">
-        <div class="cs-country-name">Германия</div>
-        <div class="cs-currency-hint">Цены в евро (€)</div>
-      </div>
-      <span class="cs-arrow">›</span>
+      <span class="cs-chev">›</span>
     </button>
   </div>
 </div>
+
 <div id="app">
 
-  <header>
-    <div>
-      <div class="logo">DRIP STORE</div>
-      <div class="logo-sub">Premium T-Shirts</div>
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span class="ticker-item">666 STORE</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Underground Streetwear</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">666 STORE</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Underground Streetwear</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">666 STORE</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Underground Streetwear</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">666 STORE</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Underground Streetwear</span>
+      <span class="ticker-item">·</span>
     </div>
-    <div class="header-right">
-      <div class="country-chip" onclick="changeCountry()">
+  </div>
+
+  <header>
+    <div class="logo-wrap">
+      <div class="logo-main"><span>6</span><span>6</span><span>6</span> STORE</div>
+      <div class="logo-sub">Underground Streetwear</div>
+    </div>
+    <div class="hdr-right">
+      <div class="c-chip" onclick="changeCountry()">
         <span id="hdr-flag">🇺🇦</span>
         <span id="hdr-sym">₴</span>
       </div>
       <div class="icon-btn" onclick="openContact()">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
         </svg>
       </div>
@@ -686,41 +764,50 @@
   </header>
 
   <section class="hero">
-    <div class="hero-tag">🔥 Новая коллекция 2025</div>
-    <h1>НОСИ<br><span>СТИЛЬ</span><br>СМЕЛО</h1>
-    <p class="hero-desc">Эксклюзивные футболки для тех, кто не боится выделяться. Каждый дроп — это история.</p>
+    <div class="hero-number">666</div>
+    <div class="hero-eyebrow">Новый дроп 2025</div>
+    <h1>НОСИ<br>ЧТО<br>БОЯТСЯ</h1>
+    <p class="hero-desc">Не для всех. Для тех, кто знает. Каждая вещь — это манифест.</p>
   </section>
 
   <div class="filters">
-    <button class="filter-btn active" onclick="filterProducts('all', this)">Все</button>
-    <button class="filter-btn" onclick="filterProducts('street', this)">Стрит</button>
-    <button class="filter-btn" onclick="filterProducts('minimal', this)">Минимал</button>
-    <button class="filter-btn" onclick="filterProducts('graphic', this)">Графика</button>
-    <button class="filter-btn" onclick="filterProducts('limited', this)">Limited</button>
+    <button class="f-btn on" onclick="filterProducts('all', this)">Все</button>
+    <button class="f-btn" onclick="filterProducts('street', this)">Стрит</button>
+    <button class="f-btn" onclick="filterProducts('minimal', this)">Минимал</button>
+    <button class="f-btn" onclick="filterProducts('graphic', this)">Графика</button>
+    <button class="f-btn" onclick="filterProducts('limited', this)">Limited</button>
   </div>
 
-  <div class="section-header">
-    <h2>Каталог</h2>
-    <span id="product-count"></span>
+  <div class="sec-header">
+    <div class="sec-title">Каталог</div>
+    <div class="sec-count" id="product-count"></div>
   </div>
 
-  <div class="products-grid" id="grid"></div>
+  <div class="grid" id="grid"></div>
 
 </div>
+
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal-sheet">
     <div class="modal-drag"></div>
-    <div class="modal-img" id="m-img"></div>
+    <div class="modal-img" id="m-img">
+      <div class="modal-img-label">666 STORE</div>
+    </div>
     <div class="modal-name" id="m-name"></div>
     <div class="modal-desc" id="m-desc"></div>
-    <div class="modal-price-row">
-      <div class="modal-price" id="m-price"></div>
-      <div class="modal-price-old" id="m-price-old"></div>
+    <div class="modal-prices">
+      <div>
+        <span class="modal-price-old" id="m-price-old"></span>
+        <div class="modal-price-fiat" id="m-price"></div>
+      </div>
+      <div class="modal-stars" id="m-stars">
+        <span class="star-icon">⭐</span>
+        <span id="m-stars-val"></span>
+      </div>
     </div>
-    <div class="modal-size-label">Выбери размер</div>
-    <div class="modal-sizes" id="m-sizes"></div>
+    <div class="modal-note">Размер обсуждается с продавцом после заказа</div>
     <button class="modal-order-btn" id="m-order-btn">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="black">
         <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.123 1.528 5.857L0 24l6.334-1.514A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
       </svg>
       Заказать в Telegram
@@ -729,195 +816,182 @@
 </div>
 
 <script>
-
-const OWNER_USERNAME = 'Tishkaminecraft';
+const OWNER_USERNAME = 'YOUR_USERNAME';
 
 const products = [
   {
     id: 0,
-    name:    'DROP #001 — Champion',
-    desc:    'Limited edition. Только 50 штук в мире. Тяжёлый хлопок 320г/м², шёлковая печать, усиленные швы.',
+    name:    'DROP 001 CHAMPION',
+    desc:    'Limited edition. 50 штук. Хлопок 320г/м², шёлковая печать, усиленные швы.',
     emoji:   '🏆',
     photo:   '',
     badge:   'hot',
     wide:    true,
     category:'limited',
-    sizes:   ['S', 'M', 'L', 'XL'],
     prices: {
-      ua: { now: '1 890', old: '2 500', sym: '₴' },
-      ru: { now: '3 500', old: '4 900', sym: '₽' },
-      de: { now: '49',    old: '65',    sym: '€' },
+      ua: { now: '1890', old: '2500', sym: '₴', stars: '250' },
+      eu: { now: '49',   old: '65',   sym: '€', stars: '250' },
     }
   },
   {
     id: 1,
-    name:    'Night Mode',
-    desc:    'Тёмная энергия для ночных вылазок. Хлопок 200г/м², DTF-печать.',
+    name:    'NIGHT MODE',
+    desc:    'Тёмная энергия. Хлопок 200г/м², DTF-печать.',
     emoji:   '🌙',
     photo:   '',
     badge:   'new',
     wide:    false,
     category:'street',
-    sizes:   ['S', 'M', 'L'],
     prices: {
-      ua: { now: '1 200', old: '',      sym: '₴' },
-      ru: { now: '2 200', old: '',      sym: '₽' },
-      de: { now: '29',    old: '',      sym: '€' },
+      ua: { now: '1200', old: '', sym: '₴', stars: '150' },
+      eu: { now: '29',   old: '', sym: '€', stars: '150' },
     }
   },
   {
     id: 2,
-    name:    'Dragon Force',
+    name:    'DRAGON FORCE',
     desc:    'Легенда в каждом стежке. Вышивка + принт, хлопок 240г/м².',
     emoji:   '🐉',
     photo:   '',
     badge:   '',
     wide:    false,
     category:'graphic',
-    sizes:   ['M', 'L', 'XL'],
     prices: {
-      ua: { now: '1 400', old: '',      sym: '₴' },
-      ru: { now: '2 600', old: '',      sym: '₽' },
-      de: { now: '34',    old: '',      sym: '€' },
+      ua: { now: '1400', old: '', sym: '₴', stars: '180' },
+      eu: { now: '34',   old: '', sym: '€', stars: '180' },
     }
   },
   {
     id: 3,
-    name:    'Volt Classic',
-    desc:    'Минимализм с зарядом. Оверсайз крой, хлопок 200г/м².',
+    name:    'VOLT CLASSIC',
+    desc:    'Минимализм с зарядом. Оверсайз, хлопок 200г/м².',
     emoji:   '⚡',
     photo:   '',
     badge:   'sale',
     wide:    false,
     category:'minimal',
-    sizes:   ['S', 'M', 'L', 'XL'],
     prices: {
-      ua: { now: '980',   old: '1 400', sym: '₴' },
-      ru: { now: '1 800', old: '2 600', sym: '₽' },
-      de: { now: '24',    old: '34',    sym: '€' },
+      ua: { now: '980',  old: '1400', sym: '₴', stars: '120' },
+      eu: { now: '24',   old: '34',   sym: '€', stars: '120' },
     }
   },
   {
     id: 4,
-    name:    'Pixel Alien',
-    desc:    'Ретро-футуризм в 8-bit стиле. Оверсайз, культ для геймеров.',
+    name:    'PIXEL ALIEN',
+    desc:    'Ретро-футуризм 8-bit. Оверсайз, культ для геймеров.',
     emoji:   '👾',
     photo:   '',
     badge:   '',
     wide:    false,
     category:'street',
-    sizes:   ['S', 'M', 'L'],
     prices: {
-      ua: { now: '1 150', old: '',      sym: '₴' },
-      ru: { now: '2 100', old: '',      sym: '₽' },
-      de: { now: '28',    old: '',      sym: '€' },
+      ua: { now: '1150', old: '', sym: '₴', stars: '140' },
+      eu: { now: '28',   old: '', sym: '€', stars: '140' },
     }
   },
   {
     id: 5,
-    name:    'Blaze Runner',
-    desc:    'Огненный принт по всей длине, оверсайз, хлопок 220г/м².',
+    name:    'BLAZE RUNNER',
+    desc:    'Огненный принт по всей длине, хлопок 220г/м².',
     emoji:   '🔥',
     photo:   '',
     badge:   '',
     wide:    false,
     category:'graphic',
-    sizes:   ['M', 'L', 'XL', '2XL'],
     prices: {
-      ua: { now: '1 350', old: '',      sym: '₴' },
-      ru: { now: '2 500', old: '',      sym: '₽' },
-      de: { now: '32',    old: '',      sym: '€' },
+      ua: { now: '1350', old: '', sym: '₴', stars: '170' },
+      eu: { now: '32',   old: '', sym: '€', stars: '170' },
     }
   },
   {
     id: 6,
-    name:    'Ocean Vibes',
-    desc:    'Спокойствие и глубина стиля. Мягкий хлопок 180г/м².',
+    name:    'OCEAN VIBES',
+    desc:    'Глубина стиля. Мягкий хлопок 180г/м².',
     emoji:   '🌊',
     photo:   '',
     badge:   'new',
     wide:    false,
     category:'minimal',
-    sizes:   ['S', 'M', 'L'],
     prices: {
-      ua: { now: '1 100', old: '',      sym: '₴' },
-      ru: { now: '2 000', old: '',      sym: '₽' },
-      de: { now: '26',    old: '',      sym: '€' },
+      ua: { now: '1100', old: '', sym: '₴', stars: '135' },
+      eu: { now: '26',   old: '', sym: '€', stars: '135' },
     }
   },
 ];
-const COUNTRY_META = {
+
+const CMETA = {
   ua: { flag: '🇺🇦', sym: '₴', name: 'Украина' },
-  ru: { flag: '🇷🇺', sym: '₽', name: 'Россия'  },
-  de: { flag: '🇩🇪', sym: '€', name: 'Германия' },
+  eu: { flag: '🇪🇺', sym: '€', name: 'Европа'  },
 };
 
-let country      = null;
-let currentIdx   = null;
-let selectedSize = null;
-let currentList  = products;
+let country    = null;
+let currentIdx = null;
+let curList    = products;
 
 function selectCountry(code) {
   country = code;
-  try { localStorage.setItem('drip_country', code); } catch(e){}
+  try { localStorage.setItem('sss_country', code); } catch(e){}
 
-  document.getElementById('hdr-flag').textContent = COUNTRY_META[code].flag;
-  document.getElementById('hdr-sym').textContent  = COUNTRY_META[code].sym;
+  document.getElementById('hdr-flag').textContent = CMETA[code].flag;
+  document.getElementById('hdr-sym').textContent  = CMETA[code].sym;
 
   const cs = document.getElementById('country-screen');
-  cs.classList.add('hiding');
-  setTimeout(() => cs.style.display = 'none', 360);
+  cs.classList.add('out');
+  setTimeout(() => cs.style.display = 'none', 380);
 
-  const app = document.getElementById('app');
-  app.classList.add('visible');
-
-  renderGrid(currentList);
+  document.getElementById('app').classList.add('on');
+  renderGrid(curList);
 }
 
 function changeCountry() {
   country = null;
   const cs = document.getElementById('country-screen');
   cs.style.display = '';
-  cs.classList.remove('hiding');
-  document.getElementById('app').classList.remove('visible');
+  cs.classList.remove('out');
+  document.getElementById('app').classList.remove('on');
 }
 
 function renderGrid(list) {
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
+
+  const n = list.length;
   document.getElementById('product-count').textContent =
-    `${list.length} ${list.length===1?'товар':list.length<5?'товара':'товаров'}`;
+    n + ' ' + (n===1?'товар':n<5?'товара':'товаров');
 
   list.forEach((p, i) => {
     const pr = p.prices[country];
     const card = document.createElement('div');
     card.className = 'card' + (p.wide ? ' wide' : '');
-    card.setAttribute('data-category', p.category);
-    card.style.animationDelay = (0.07 + i * 0.05) + 's';
+    card.setAttribute('data-cat', p.category);
+    card.style.animationDelay = (0.06 + i * 0.05) + 's';
     card.onclick = () => openModal(p.id);
 
-    const badgeMap = { new: 'НОВИНКА', hot: '🔥 ХИТ', sale: 'СКИДКА' };
+    const badgeMap = { new:'NEW', hot:'HIT', sale:'SALE' };
     const badgeHTML = p.badge
-      ? `<span class="card-badge badge-${p.badge}">${badgeMap[p.badge]}</span>` : '';
+      ? `<span class="card-badge b-${p.badge}">${badgeMap[p.badge]}</span>` : '';
 
     const imgInner = p.photo
       ? `<img src="${p.photo}" alt="${p.name}" loading="lazy">`
       : `<span class="card-emoji">${p.emoji}</span>`;
 
-    const sizesHTML = p.sizes.map(s => `<div class="size-chip">${s}</div>`).join('');
-    const oldHTML   = pr.old ? `<span class="price-old">${pr.old}${pr.sym}</span>` : '';
+    const oldHTML = pr.old
+      ? `<span class="price-old">${pr.old}${pr.sym}</span>` : '';
 
     card.innerHTML = `
       ${badgeHTML}
-      <div class="card-img">${imgInner}</div>
+      <div class="card-img">${imgInner}<span class="card-cross">✕</span></div>
       <div class="card-body">
-        <div>
-          <div class="card-name">${p.name}</div>
-          <div class="card-desc">${p.desc}</div>
-          <div class="sizes-row">${sizesHTML}</div>
-        </div>
+        <div class="card-name">${p.name}</div>
+        <div class="card-desc">${p.desc}</div>
         <div class="card-footer">
-          <div>${oldHTML}<div class="price-now">${pr.now}${pr.sym}</div></div>
+          <div class="price-block">
+            ${oldHTML}
+            <div class="price-row">
+              <span class="price-fiat">${pr.now}${pr.sym}</span>
+              <span class="price-stars"><span class="star-icon">⭐</span>${pr.stars}</span>
+            </div>
+          </div>
           <button class="buy-btn" onclick="event.stopPropagation();openModal(${p.id})">Купить</button>
         </div>
       </div>`;
@@ -928,34 +1002,21 @@ function renderGrid(list) {
 function openModal(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
-  currentIdx   = id;
-  selectedSize = p.sizes[0];
-
+  currentIdx = id;
   const pr = p.prices[country];
 
   const imgBox = document.getElementById('m-img');
-  imgBox.innerHTML = p.photo
-    ? `<img src="${p.photo}" alt="${p.name}">`
-    : p.emoji;
+  if (p.photo) {
+    imgBox.innerHTML = `<img src="${p.photo}" alt="${p.name}"><div class="modal-img-label">666 STORE</div>`;
+  } else {
+    imgBox.innerHTML = `<span style="font-size:80px;filter:grayscale(1)">${p.emoji}</span><div class="modal-img-label">666 STORE</div>`;
+  }
 
   document.getElementById('m-name').textContent      = p.name;
   document.getElementById('m-desc').textContent      = p.desc;
   document.getElementById('m-price').textContent     = pr.now + pr.sym;
-  document.getElementById('m-price-old').textContent = pr.old ? (pr.old + pr.sym) : '';
-
-  const sizesEl = document.getElementById('m-sizes');
-  sizesEl.innerHTML = '';
-  p.sizes.forEach((s, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'sz-btn' + (i === 0 ? ' on' : '');
-    btn.textContent = s;
-    btn.onclick = () => {
-      sizesEl.querySelectorAll('.sz-btn').forEach(b => b.classList.remove('on'));
-      btn.classList.add('on');
-      selectedSize = s;
-    };
-    sizesEl.appendChild(btn);
-  });
+  document.getElementById('m-price-old').textContent = pr.old ? pr.old + pr.sym : '';
+  document.getElementById('m-stars-val').textContent = pr.stars + ' звёзд';
 
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -971,9 +1032,9 @@ function closeModal(e) {
 document.getElementById('m-order-btn').onclick = () => {
   const p = products.find(x => x.id === currentIdx);
   if (!p) return;
-  const pr  = p.prices[country];
+  const pr = p.prices[country];
   const msg = encodeURIComponent(
-    `👕 Хочу заказать: ${p.name}\n📐 Размер: ${selectedSize}\n💰 Цена: ${pr.now}${pr.sym}\n🌍 Страна: ${COUNTRY_META[country].name}`
+    `👕 Хочу заказать: ${p.name}\n💰 Цена: ${pr.now}${pr.sym} / ⭐ ${pr.stars} звёзд\n🌍 Страна: ${CMETA[country].name}`
   );
   const url = `https://t.me/${OWNER_USERNAME}?text=${msg}`;
   if (window.Telegram?.WebApp) window.Telegram.WebApp.openTelegramLink(url);
@@ -987,10 +1048,10 @@ function openContact() {
 }
 
 function filterProducts(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentList = cat === 'all' ? products : products.filter(p => p.category === cat);
-  renderGrid(currentList);
+  document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  curList = cat === 'all' ? products : products.filter(p => p.category === cat);
+  renderGrid(curList);
 }
 
 (function init() {
@@ -999,8 +1060,8 @@ function filterProducts(cat, btn) {
     window.Telegram.WebApp.expand();
   }
   let saved = null;
-  try { saved = localStorage.getItem('drip_country'); } catch(e){}
-  if (saved && COUNTRY_META[saved]) selectCountry(saved);
+  try { saved = localStorage.getItem('sss_country'); } catch(e){}
+  if (saved && CMETA[saved]) selectCountry(saved);
 })();
 </script>
 </body>
